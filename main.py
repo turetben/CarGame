@@ -1,16 +1,40 @@
-# This is a sample Python script.
+import pygame, sys
+from pygame.locals import *
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+# Initialize program
+pygame.init()
 
+# Assign FPS a value
+FPS = 30
+FramePerSec = pygame.time.Clock()
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+# Setting up color objects
+BLUE = (0, 0, 255)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
 
+# Setup a 300x300 pixel display with caption
+DISPLAYSURF = pygame.display.set_mode((300, 300))
+DISPLAYSURF.fill(WHITE)
+pygame.display.set_caption("Example")
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+# Creating Lines and Shapes
+pygame.draw.line(DISPLAYSURF, BLUE, (150, 130), (130, 170))
+pygame.draw.line(DISPLAYSURF, BLUE, (150, 130), (170, 170))
+pygame.draw.line(DISPLAYSURF, GREEN, (130, 170), (170, 170))
+pygame.draw.circle(DISPLAYSURF, BLACK, (100, 50), 30)
+pygame.draw.circle(DISPLAYSURF, BLACK, (200, 50), 30)
+pygame.draw.rect(DISPLAYSURF, RED, (100, 200, 100, 50), 2)
+pygame.draw.rect(DISPLAYSURF, BLACK, (110, 260, 80, 5))
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# Beginning Game Loop
+while True:
+    pygame.display.update()
+    for event in pygame.event.get():
+        if event.type == QUIT:
+            pygame.quit()
+            sys.exit()
+
+    FramePerSec.tick(FPS)
