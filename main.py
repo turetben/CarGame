@@ -1,5 +1,6 @@
 import pygame
 import sys
+import random
 from pygame.locals import *  # TODO: change to specific imports
 from pathlib import Path
 
@@ -30,6 +31,24 @@ display_surface.fill(WHITE)
 pygame.display.set_caption("pycar-racing")
 
 
+class Enemy(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load(ASSETS_PATH / "Enemy.png")
+        self.surf = pygame.Surface((40, 75))
+        self.rect = self.surf.get_rect(center=(random.randint(40,SCREEN_WIDTH - 40),0))
+
+    def move(self):
+        global score
+        global speed
+        self.rect.move_ip(0, speed)
+        if self.rect.bottom > SCREEN_HEIGHT:
+            score += 1
+            speed += speed_increase
+            self.rect.top = 0
+            self.rect.center = (random.randint(40, SCREEN_WIDTH - 40), 0)
+
+
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -46,6 +65,11 @@ class Player(pygame.sprite.Sprite):
             self.rect.move_ip(5,0)
 
 player = Player()
+enemy1 = Enemy()
+enemy2 = Enemy()
+enemies = pygame.sprite.Group()
+enemies.add(enemy1)
+enemies.add(enemy2)
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 
