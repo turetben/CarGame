@@ -66,10 +66,10 @@ class Player(pygame.sprite.Sprite):
 
 player = Player()
 enemy1 = Enemy()
-enemy2 = Enemy()
+
 enemies = pygame.sprite.Group()
 enemies.add(enemy1)
-enemies.add(enemy2)
+
 all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 
