@@ -24,8 +24,8 @@ BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 
 # Setup a 300x300 pixel display with caption
-SCREEN_WIDTH = 400
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 381
+SCREEN_HEIGHT = 570
 speed = 5
 score = 0
 speed_increase = 1
@@ -41,13 +41,13 @@ class Enemy(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load(ASSETS_PATH / "Enemy.png")
         self.surf = pygame.Surface((40, 75))
-        self.rect = self.surf.get_rect(center=(random.randint(40,SCREEN_WIDTH - 40),0))
+        self.rect = self.surf.get_rect(center=(random.randint(40, SCREEN_WIDTH - 40), -50))
 
     def move(self):
         global score
         global speed
         self.rect.move_ip(0, speed)
-        if self.rect.bottom > SCREEN_HEIGHT:
+        if self.rect.top > SCREEN_HEIGHT:
             score += 1
             if speed <= MAX_SPEED:
                 speed += speed_increase
@@ -69,7 +69,7 @@ class Player(pygame.sprite.Sprite):
             if pressed_keys[K_LEFT]:
                 self.rect.move_ip(-5, 0)
         if self.rect.right < SCREEN_WIDTH and pressed_keys[K_RIGHT]:
-            self.rect.move_ip(5,0)
+            self.rect.move_ip(5, 0)
 
 player = Player()
 enemy1 = Enemy()
@@ -81,6 +81,7 @@ all_sprites = pygame.sprite.Group()
 all_sprites.add(player)
 all_sprites.add(enemy1)
 
+background_position = 0
 
 # Beginning Game Loop
 while True:
@@ -95,7 +96,10 @@ while True:
         enemies.add(e)
         all_sprites.add(e)
 
-    display_surface.blit(background, (0, 0))
+    display_surface.blit(background, (0, background_position))
+    display_surface.blit(background, (0, background_position - SCREEN_HEIGHT + 10))
+    background_position += speed
+    background_position %= SCREEN_HEIGHT
     for entity in all_sprites:
         display_surface.blit(entity.image, entity.rect)
         entity.move()
