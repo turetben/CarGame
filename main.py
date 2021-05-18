@@ -61,7 +61,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load(ASSETS_PATH / "Player.png")
         self.surf = pygame.Surface((40, 75))
-        self.rect = self.surf.get_rect(center=(160, 520))
+        self.rect = self.surf.get_rect(center=(160, 500))
 
     def move(self):
         pressed_keys = pygame.key.get_pressed()
